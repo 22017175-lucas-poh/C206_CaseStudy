@@ -22,6 +22,24 @@ public class menu {
 		this.quantity = quantity;
 		this.specification = specification;
 	}
+	public String getItemname() {
+		return itemname;
+	}
+	public void setItemname(String itemname) {
+		this.itemname = itemname;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public String getSpecification() {
+		return specification;
+	}
+	public void setSpecification(String specification) {
+		this.specification = specification;
+	}
 	
 	
 		
