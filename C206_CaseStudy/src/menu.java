@@ -14,5 +14,15 @@
  *
  */
 public class menu {
+	private String itemname;
+	private int quantity;
+	private String specification;
+	public menu(String itemname, int quantity, String specification) {
+		this.itemname = itemname;
+		this.quantity = quantity;
+		this.specification = specification;
+	}
+	
+	
 		
 }	
