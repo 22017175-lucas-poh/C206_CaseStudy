@@ -210,14 +210,18 @@ public class C206_CaseStudy {
 	private static void PaymentUI(ArrayList<payment> paymentList) {
 		int option = 0;
 		while (option != 4) {
-			option = Helper.readInt("Enter an option > ");
 			Paymentmenu();
 
+			option = Helper.readInt("Enter an option > ");
+
 			if (option == 1) {
-				payment p = new payment();
-			    addpayment(paymentList, p);
+				payment pc = inputPayment();
+				addPayment(paymentList, pc);
 			  } else if (option == 2) {
+				  viewAllpayment(paymentList);
 			} else if (option == 3) {
+				int paymentIdToDelete=Helper.readInt("Enter the ID to be deleted > ");
+				deletepayment(paymentList, paymentIdToDelete);
 			} else if (option == 4) {
 			} else {
 				System.out.println("Invalid option");
@@ -468,33 +472,48 @@ public class C206_CaseStudy {
 		}
 
 	}
-	public static void addpayment(ArrayList<payment> paymentList, payment p) {
-		paymentList.add(p);
+
+	public static payment inputPayment() {
+	    int paymentId = Helper.readInt("Enter ID > ");
+	    double amount = Helper.readDouble("Enter amount of money > ");
+
+	    return new payment(paymentId, amount);
 	}
 
-	public static String retrieveAllpayment(ArrayList<payment> paymentList) {
-
-		String allpayment = "";
-
-		for (payment p : paymentList) {
-
-			allpayment += String.format("%-10d %-10.2f\n", p.getpaymentid(), p.getamount());
-		}
-
-		return allpayment;
+	public static void addPayment(ArrayList<payment> paymentList, payment pc) {
+	    for (payment item : paymentList) {
+	        if (item.getpaymentid() == pc.getpaymentid()) {
+	            return;
+	        }
+	    }
+	    paymentList.add(pc);
 	}
 
-	public static boolean doDeletepayment(ArrayList<payment> paymentList, int paymentId) {
-
-		for (int i = 0; i < paymentList.size(); i++) {
-
-			if (paymentList.get(i).getpaymentid() == paymentId) {
-
-				paymentList.remove(i);
-
-				return true;
-			}
-		}
-		return false;
+	private static void viewAllpayment(ArrayList<payment> paymentList) {
+	    System.out.println("--- All Payments ---");
+	    for (payment pc : paymentList) {
+	        String paymentDetails = String.format("Payment ID: %-10d Amount: %.2f", pc.getpaymentid(), pc.getamount());
+	        System.out.println(paymentDetails);
+	    }
 	}
+	public static boolean deletepayment(ArrayList<payment> paymentList, int paymentIdToDelete) {
+	    boolean isDeleted = false;
+	    for (int i = 0; i < paymentList.size(); i++) {
+	        if (paymentList.get(i).getpaymentid() == paymentIdToDelete) {
+	            paymentList.remove(i);
+	            System.out.println("Payment with ID '" + paymentIdToDelete + "' has been deleted.");
+	            isDeleted = true;
+	            break;
+	        }
+	    }
+	    if (!isDeleted) {
+	        System.out.println("Payment with ID '" + paymentIdToDelete + "' was not found.");
+	    }
+	    return isDeleted;
+	}
+	
+	
+	
+	
+	
 }
