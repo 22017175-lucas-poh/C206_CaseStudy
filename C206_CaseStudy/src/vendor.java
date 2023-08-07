@@ -1,25 +1,31 @@
 public class vendor  {
-	private String description;
-	private double prices;
+	private String name;
+	private String location;
+	private String contractEnd;
+	public vendor(String name, String location, String contractEnd) {
+		this.name = name;
+		this.location = location;
+		this.contractEnd = contractEnd;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getContractEnd() {
+		return contractEnd;
+	}
+	public void setContractEnd(String contractEnd) {
+		this.contractEnd = contractEnd;
+	}
 
-
-	public vendor(String description, double prices) {
-		this.description = description;
-		this.prices = prices;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public double getPrices() {
-		return prices;
-	}
-	public void setPrices(double prices) {
-		this.prices = prices;
-	}
-	
 
 
 }
