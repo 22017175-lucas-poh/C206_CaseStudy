@@ -11,9 +11,12 @@ public class C206_CaseStudyTest {
 	private payment p2;
 	private menu m1;
 	private menu m2;
+	private vendor v1;
+	private vendor v2;
 
 	private ArrayList<payment> paymentList;
 	private ArrayList<menu> menuList;
+	private ArrayList<vendor>vendorList;
 
 	@Before
 	public void setUp() throws Exception {
@@ -23,6 +26,7 @@ public class C206_CaseStudyTest {
 		p1 = new payment(1, 100.0);
 		p2 = new payment(2, 200.0);
 		paymentList = new ArrayList<>();
+		vendorList=new ArrayList<vendor>();
 		
 	}
 
@@ -34,6 +38,7 @@ public class C206_CaseStudyTest {
 	public void testAddmenu() {
 		// fail("Not yet implemented");
 		assertNotNull("Test if there is valid menu arraylist to add to", menuList);
+		assertEquals("Check if the menu ArrayList is initially empty", 0, menuList.size());
 		C206_CaseStudy.addmenu(menuList, m1);	
 		assertEquals("Check that menu arraylist size is 1", 1, menuList.size());
 		assertSame("Check that menu1 is added", m1, menuList.get(0));
@@ -128,7 +133,54 @@ public class C206_CaseStudyTest {
 		C206_CaseStudyTest.addpayment(paymentList, p2);
 		assertEquals("Test that payment arraylist size is 2", 2, paymentList.size());
 	}
+	@Test
+	public void testAddvendor() {
+		vendorList.clear();
 
+	    assertNotNull("Test if there is a valid Vendor ArrayList to add to", vendorList);
+
+	    vendor newVendor1 = new vendor("Vendor 3", "City Z", "2023-12-31");
+	    C206_CaseStudy.addvendor(vendorList, newVendor1);
+	    assertEquals("Check that vendor ArrayList size is 1", 1, vendorList.size());
+	    assertSame("Check that newVendor1 is added", newVendor1, vendorList.get(0));
+
+	    vendor newVendor2 = new vendor("Vendor 4", "City W", "2023-11-30");
+	    C206_CaseStudy.addvendor(vendorList, newVendor2);
+	    assertEquals("Check that vendor ArrayList size is 2", 2, vendorList.size());
+	    assertSame("Check that newVendor2 is added", newVendor2, vendorList.get(1));
+	}
+	@Test
+	public void testDeletevendor() {
+		// ArrayList<menu> menuList = new ArrayList<>();
+		vendorList.clear();
+		vendor newVendor1 = new vendor("Vendor 3", "City Z", "2023-12-31");
+	    C206_CaseStudy.addvendor(vendorList, newVendor1);
+
+	    vendor newVendor2 = new vendor("Vendor 4", "City W", "2023-11-30");
+	    C206_CaseStudy.addvendor(vendorList, newVendor2);
+
+		// Delete an existing menu item
+		boolean isDeleteSuccessful = C206_CaseStudy.deletevendor(vendorList, "Vendor 3");
+
+		// Assert that the delete operation is successful
+		assertTrue("Test if an existing item can be deleted", isDeleteSuccessful);
+
+		// Delete a non-existing menu item
+		isDeleteSuccessful = C206_CaseStudy.deletevendor(vendorList, "pancakes");
+
+		// Assert that the delete operation is not successful for a non-existing item
+		assertFalse("Test if a non-existing item cannot be deleted", isDeleteSuccessful);
+
+		// Delete the same menu item again
+		isDeleteSuccessful = C206_CaseStudy.deletevendor(vendorList, "vendor 3");
+
+		// Assert that the delete operation is not successful for the same item
+		assertFalse("Test if the same item cannot be deleted again", isDeleteSuccessful);
+
+		// Assert that the menu list size has been reduced by 1 after successful
+		// deletion
+		assertEquals("Check that menu list size is reduced by 1 after deletion", 1, vendorList.size());
+	}
 	@Test
 	public void testRetrieveAllpayment() {
 		// Test if payment list is not null but empty -boundary
@@ -154,6 +206,8 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that ViewAllpaymentlist", testOutput, allpayment);
 
 	}
+	
+	
 
 	@Test
 	public void testDeletepayment() {
@@ -170,5 +224,8 @@ public class C206_CaseStudyTest {
 		assertFalse("Test that the payment is not found and delete fails", allpayment);
 
 	}
+
+	
+	
 	
 }

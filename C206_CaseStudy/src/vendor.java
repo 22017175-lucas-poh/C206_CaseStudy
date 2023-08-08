@@ -25,7 +25,10 @@ public class vendor  {
 	public void setContractEnd(String contractEnd) {
 		this.contractEnd = contractEnd;
 	}
-
+	@Override
+    public String toString() {
+        return "Vendor [name=" + name + ", location=" + location + ", contractEnd=" + contractEnd + "]";
+    }
 
 
 }

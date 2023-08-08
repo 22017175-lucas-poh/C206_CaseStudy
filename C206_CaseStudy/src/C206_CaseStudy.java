@@ -9,11 +9,11 @@ public class C206_CaseStudy {
 		ArrayList<order> orderList = new ArrayList<order>();
 		ArrayList<user> userList = new ArrayList<user>();
 		ArrayList<payment> paymentList = new ArrayList<payment>();
+		ArrayList<vendor> vendorList = new ArrayList<vendor>();
 
-		paymentList.add(new payment(1,100.0));
-		paymentList.add(new payment(2,200.0));
+		paymentList.add(new payment(1, 100.0));
+		paymentList.add(new payment(2, 200.0));
 
-		
 		userList.add(new user("Tim", "i2kdb2"));
 		userList.add(new user("Susan", "ssld02"));
 
@@ -25,6 +25,9 @@ public class C206_CaseStudy {
 
 		orderList.add(new order(1, "Spaghetti Bolognese"));
 		orderList.add(new order(2, "Fish and Chips"));
+
+		vendorList.add(new vendor("Vendor 1", "City X", "2023-12-31"));
+		vendorList.add(new vendor("Vendor 2", "City Y", "2023-11-30"));
 
 		int option = 0;
 
@@ -43,7 +46,7 @@ public class C206_CaseStudy {
 			} else if (option == 5) {
 				PaymentUI(paymentList);
 			} else if (option == 6) {
-				VendorUI();
+				VendorUI(vendorList);
 			} else if (option == 7) {
 				System.out.println("Bye!");
 			} else {
@@ -217,10 +220,10 @@ public class C206_CaseStudy {
 			if (option == 1) {
 				payment pc = inputPayment();
 				addPayment(paymentList, pc);
-			  } else if (option == 2) {
-				  viewAllpayment(paymentList);
+			} else if (option == 2) {
+				viewAllpayment(paymentList);
 			} else if (option == 3) {
-				int paymentIdToDelete=Helper.readInt("Enter the ID to be deleted > ");
+				int paymentIdToDelete = Helper.readInt("Enter the ID to be deleted > ");
 				deletepayment(paymentList, paymentIdToDelete);
 			} else if (option == 4) {
 			} else {
@@ -240,17 +243,20 @@ public class C206_CaseStudy {
 	}
 
 	// for people doing the vendor
-	private static void VendorUI() {
-		Vendormenu();
+	private static void VendorUI(ArrayList<vendor> vendorList) {
 		int option = 0;
 		while (option != 4) {
+			Vendormenu();
 
 			option = Helper.readInt("Enter an option > ");
 			if (option == 1) {
-
-			} else if (option == 2) {
-
+				vendor v = inputvendor();
+				addvendor(vendorList, v);
+				} else if (option == 2) {
+				viewAllvendor(vendorList);
 			} else if (option == 3) {
+				String vendorName = Helper.readString("Enter vendor name to delete > ");
+				deletevendor(vendorList, vendorName);
 			} else if (option == 4) {
 			} else {
 				System.out.println("Invalid option");
@@ -434,7 +440,6 @@ public class C206_CaseStudy {
 		Helper.line(80, "-");
 	}
 
-
 	public static user inputuser() {
 		String username = Helper.readString("Enter username > ");
 		String password = Helper.readString("Enter  password > ");
@@ -474,46 +479,85 @@ public class C206_CaseStudy {
 	}
 
 	public static payment inputPayment() {
-	    int paymentId = Helper.readInt("Enter ID > ");
-	    double amount = Helper.readDouble("Enter amount of money > ");
+		int paymentId = Helper.readInt("Enter ID > ");
+		double amount = Helper.readDouble("Enter amount of money > ");
 
-	    return new payment(paymentId, amount);
+		return new payment(paymentId, amount);
 	}
 
 	public static void addPayment(ArrayList<payment> paymentList, payment pc) {
-	    for (payment item : paymentList) {
-	        if (item.getpaymentid() == pc.getpaymentid()) {
-	            return;
-	        }
-	    }
-	    paymentList.add(pc);
+		for (payment item : paymentList) {
+			if (item.getpaymentid() == pc.getpaymentid()) {
+				return;
+			}
+		}
+		paymentList.add(pc);
 	}
 
 	private static void viewAllpayment(ArrayList<payment> paymentList) {
-	    System.out.println("--- All Payments ---");
-	    for (payment pc : paymentList) {
-	        String paymentDetails = String.format("Payment ID: %-10d Amount: %.2f", pc.getpaymentid(), pc.getamount());
-	        System.out.println(paymentDetails);
-	    }
+		System.out.println("--- All Payments ---");
+		for (payment pc : paymentList) {
+			String paymentDetails = String.format("Payment ID: %-10d Amount: %.2f", pc.getpaymentid(), pc.getamount());
+			System.out.println(paymentDetails);
+		}
 	}
+
 	public static boolean deletepayment(ArrayList<payment> paymentList, int paymentIdToDelete) {
-	    boolean isDeleted = false;
-	    for (int i = 0; i < paymentList.size(); i++) {
-	        if (paymentList.get(i).getpaymentid() == paymentIdToDelete) {
-	            paymentList.remove(i);
-	            System.out.println("Payment with ID '" + paymentIdToDelete + "' has been deleted.");
-	            isDeleted = true;
-	            break;
+		boolean isDeleted = false;
+		for (int i = 0; i < paymentList.size(); i++) {
+			if (paymentList.get(i).getpaymentid() == paymentIdToDelete) {
+				paymentList.remove(i);
+				System.out.println("Payment with ID '" + paymentIdToDelete + "' has been deleted.");
+				isDeleted = true;
+				break;
+			}
+		}
+		if (!isDeleted) {
+			System.out.println("Payment with ID '" + paymentIdToDelete + "' was not found.");
+		}
+		return isDeleted;
+	}
+
+	 public static vendor inputvendor() {
+	        String name = Helper.readString("Enter vendor name: ");
+	        String location = Helper.readString("Enter vendor location: ");
+	        String contractEnd = Helper.readString("Enter contract end date: ");
+	        return new vendor(name, location, contractEnd);
+	    }
+
+	    public static void addvendor(ArrayList<vendor> vendorList,vendor v) {
+	    	vendor item;
+			for (int i = 0; i < vendorList.size(); i++) {
+				item = vendorList.get(i);
+				if (item.getName().equalsIgnoreCase(v.getName()))
+					return;
+			}
+			if ((v.getName().isEmpty()) || (v.getLocation().isEmpty()||v.getContractEnd().isEmpty())) {
+				return;
+			}
+			vendorList.add(v);
+
+		
+
+	    }
+
+	    public static void viewAllvendor(ArrayList<vendor> vendorList) {
+	        System.out.println("All Vendors:");
+	        for (vendor vendor : vendorList) {
+	            String vendorDetails = String.format("Name: %-20s   Location: %-25s Contract End: %s", vendor.getName(),
+	                    vendor.getLocation(), vendor.getContractEnd());
+	            System.out.println(vendorDetails);
 	        }
 	    }
-	    if (!isDeleted) {
-	        System.out.println("Payment with ID '" + paymentIdToDelete + "' was not found.");
+	    public static boolean deletevendor(ArrayList<vendor> vendorList, String vendorName) {
+	        for (int i = 0; i < vendorList.size(); i++) {
+	            vendor vendor = vendorList.get(i);
+	            if (vendor.getName().equalsIgnoreCase(vendorName)) {
+	                vendorList.remove(i);
+	                return true;
+	            }
+	        }
+	        return false;
 	    }
-	    return isDeleted;
-	}
-	
-	
-	
-	
-	
+
 }
