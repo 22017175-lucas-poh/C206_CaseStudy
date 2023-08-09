@@ -2,9 +2,28 @@ import java.util.ArrayList;
 
 public class C206_CaseStudy {
 
+	/**
+	 * 
+	 */
+	private static final int OPTION_DELETE = 3;
+	/**
+	 * 
+	 */
+	private static final int OPTION_VIEW_ALL = 2;
+	/**
+	 * 
+	 */
+	private static final int OPTION_ADD = 1;
+	/**
+	 * 
+	 */
+	private static final int MENU_OPTION_QUIT = 4;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ArrayList<menu> menuList = new ArrayList<menu>();
+		ArrayList<menu> Foodmenu = Adding_food_into_menu();
+		
+		
+		
 		ArrayList<School> schoolList = new ArrayList<School>();
 		ArrayList<order> orderList = new ArrayList<order>();
 		ArrayList<user> userList = new ArrayList<user>();
@@ -16,9 +35,6 @@ public class C206_CaseStudy {
 
 		userList.add(new user("Tim", "i2kdb2"));
 		userList.add(new user("Susan", "ssld02"));
-
-		menuList.add(new menu("Spaghetti Bolognese", 2, "Gluten-free pasta"));
-		menuList.add(new menu("Fish and Chips", 2, "Tartar sauce on the side"));
 
 		schoolList.add(new School("Changkat changi secondary school", "simei", 67859790));
 		schoolList.add(new School("Ngee Ann secondary school", "Tampines", 67844583));
@@ -40,7 +56,7 @@ public class C206_CaseStudy {
 			} else if (option == 2) {
 				SchoolUI(schoolList);
 			} else if (option == 3) {
-				MenuUI(menuList);
+				MenuUI(Foodmenu);
 			} else if (option == 4) {
 				OrderUI(orderList);
 			} else if (option == 5) {
@@ -54,6 +70,16 @@ public class C206_CaseStudy {
 			}
 
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	private static ArrayList<menu> Adding_food_into_menu() {
+		ArrayList<menu> menuList = new ArrayList<menu>();
+		menuList.add(new menu("Spaghetti Bolognese", 2, "Gluten-free pasta"));
+		menuList.add(new menu("Fish and Chips", 2, "Tartar sauce on the side"));
+		return menuList;
 	}
 
 	public static void menu() {
@@ -71,25 +97,25 @@ public class C206_CaseStudy {
 	// for people doing the User
 
 	public static void UserUI(ArrayList<user> userList) {
-		Usermenu();
 		int option = 0;
-		while (option != 4) {
+		while (option != MENU_OPTION_QUIT) {
+			Usermenu();
 
 			option = Helper.readInt("Enter an option > ");
-			if (option == 1) {
+			if (option == OPTION_ADD) {
 				user u = inputuser();
 				addUser(userList, u);
 				System.out.println("user added");
 
-			} else if (option == 2) {
+			} else if (option == OPTION_VIEW_ALL) {
 				viewAllUser(userList);
 
-			} else if (option == 3) {
+			} else if (option == OPTION_DELETE) {
 				user u = inputuser();
 				removeUser(userList, u);
 				System.out.println("user removed");
 
-			} else if (option == 4) {
+			} else if (option == MENU_OPTION_QUIT) {
 			} else {
 				System.out.println("Invalid option");
 			}
@@ -119,19 +145,20 @@ public class C206_CaseStudy {
 	private static void SchoolUI(ArrayList<School> schoolList) {
 
 		int option = 0;
-		while (option != 4) {
+		while (option != MENU_OPTION_QUIT) {
 			Schoolmenu();
 
 			option = Helper.readInt("Enter an option > ");
-			if (option == 1) {
+			if (option == OPTION_ADD) {
 				School school = inputSchool();
 				schoolList.add(school);
 				System.out.println("School added");
-			} else if (option == 2) {
+			} else if (option == OPTION_VIEW_ALL) {
 				viewAllSchools(schoolList);
 
-			} else if (option == 3) {
-			} else if (option == 4) {
+			} else if (option == OPTION_DELETE) {
+				deleteSchool(schoolList, null);
+			} else if (option == MENU_OPTION_QUIT) {
 			} else {
 				System.out.println("Invalid option");
 			}
@@ -144,21 +171,21 @@ public class C206_CaseStudy {
 	private static void MenuUI(ArrayList<menu> menuList) {
 
 		int option = 0;
-		while (option != 4) {
+		while (option != MENU_OPTION_QUIT) {
 			Menumenu();
 
 			option = Helper.readInt("Enter an option > ");
-			if (option == 1) {
+			if (option == OPTION_ADD) {
 				menu mc = inputmenu();
 				addmenu(menuList, mc);
 				System.out.println("menu added");
-			} else if (option == 2) {
+			} else if (option == OPTION_VIEW_ALL) {
 				viewAllMenus(menuList);
-			} else if (option == 3) {
+			} else if (option == OPTION_DELETE) {
 				String menuNameToDelete = Helper.readString("Enter menu item that is to be deleted > ");
 				deleteMenu(menuList, menuNameToDelete);
 
-			} else if (option == 4) {
+			} else if (option == MENU_OPTION_QUIT) {
 			} else {
 				System.out.println("Invalid option");
 			}
@@ -178,21 +205,21 @@ public class C206_CaseStudy {
 
 	private static void OrderUI(ArrayList<order> orderList) {
 		int option = 0;
-		while (option != 4) {
+		while (option != MENU_OPTION_QUIT) {
 			Ordermenu();
 
 			option = Helper.readInt("Enter an option > ");
-			if (option == 1) {
+			if (option == OPTION_ADD) {
 				order ob = inputorder();
 				addorder(orderList, ob);
 				System.out.println("Order added");
-			} else if (option == 2) {
+			} else if (option == OPTION_VIEW_ALL) {
 				viewAllOrder(orderList);
 
-			} else if (option == 3) {
+			} else if (option == OPTION_DELETE) {
 				order ob = inputorder();
 				deleteorder(orderList, ob);
-			} else if (option == 4) {
+			} else if (option == MENU_OPTION_QUIT) {
 			} else {
 				System.out.println("Invalid option");
 			}
@@ -212,20 +239,20 @@ public class C206_CaseStudy {
 
 	private static void PaymentUI(ArrayList<payment> paymentList) {
 		int option = 0;
-		while (option != 4) {
+		while (option != MENU_OPTION_QUIT) {
 			Paymentmenu();
 
 			option = Helper.readInt("Enter an option > ");
 
-			if (option == 1) {
+			if (option == OPTION_ADD) {
 				payment pc = inputPayment();
 				addPayment(paymentList, pc);
-			} else if (option == 2) {
+			} else if (option ==OPTION_VIEW_ALL) {
 				viewAllpayment(paymentList);
-			} else if (option == 3) {
+			} else if (option == OPTION_DELETE) {
 				int paymentIdToDelete = Helper.readInt("Enter the ID to be deleted > ");
 				deletepayment(paymentList, paymentIdToDelete);
-			} else if (option == 4) {
+			} else if (option == MENU_OPTION_QUIT) {
 			} else {
 				System.out.println("Invalid option");
 			}
@@ -245,19 +272,19 @@ public class C206_CaseStudy {
 	// for people doing the vendor
 	private static void VendorUI(ArrayList<vendor> vendorList) {
 		int option = 0;
-		while (option != 4) {
+		while (option != MENU_OPTION_QUIT) {
 			Vendormenu();
 
 			option = Helper.readInt("Enter an option > ");
-			if (option == 1) {
+			if (option == OPTION_ADD) {
 				vendor v = inputvendor();
 				addvendor(vendorList, v);
-				} else if (option == 2) {
+				} else if (option == OPTION_VIEW_ALL) {
 				viewAllvendor(vendorList);
-			} else if (option == 3) {
+			} else if (option == OPTION_DELETE) {
 				String vendorName = Helper.readString("Enter vendor name to delete > ");
 				deletevendor(vendorList, vendorName);
-			} else if (option == 4) {
+			} else if (option == MENU_OPTION_QUIT) {
 			} else {
 				System.out.println("Invalid option");
 			}
@@ -286,12 +313,15 @@ public class C206_CaseStudy {
 	public static void addmenu(ArrayList<menu> menuList, menu mc) {
 		// TODO Auto-generated method stub
 		menu item;
-		for (int i = 0; i < menuList.size(); i++) {
+		int menusize = menuList.size();
+		for (int i = 0; i < menusize; i++) {
 			item = menuList.get(i);
-			if (item.getItemname().equalsIgnoreCase(mc.getItemname()))
+			boolean itemnameget = item.getItemname().equalsIgnoreCase(mc.getItemname());
+			if (itemnameget)
 				return;
 		}
-		if ((mc.getItemname().isEmpty()) || (mc.getSpecification().isEmpty())) {
+		boolean getitem_name_and_gettSpecification_is_empty = (mc.getItemname().isEmpty()) || (mc.getSpecification().isEmpty());
+		if (getitem_name_and_gettSpecification_is_empty) {
 			return;
 		}
 		menuList.add(mc);
@@ -421,7 +451,7 @@ public class C206_CaseStudy {
 
 		for (int i = 0; i < userList.size(); i++) {
 
-			output += String.format("%-15s %-15s\n ", userList.get(i).getUserame(), userList.get(i).getPassword());
+			output += String.format("%-15s %-10s\n", userList.get(i).getUserame(), userList.get(i).getPassword());
 		}
 		return output;
 	}
