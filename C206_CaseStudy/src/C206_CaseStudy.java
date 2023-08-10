@@ -214,7 +214,7 @@ public class C206_CaseStudy {
 				addorder(orderList, ob);
 				System.out.println("Order added");
 			} else if (option == OPTION_VIEW_ALL) {
-				viewAllOrder(orderList);
+				retrieveAllpayment(orderList);
 
 			} else if (option == OPTION_DELETE) {
 				order ob = inputorder();
@@ -422,7 +422,7 @@ public class C206_CaseStudy {
 		orderList.add(ob);
 	}
 
-	private static void viewAllOrder(ArrayList<order> orderList) {
+	private static void retrieveAllpayment(ArrayList<order> orderList) {
 		System.out.println("--- All Order ---");
 		for (order ob : orderList) {
 			String orderDetails = String.format("Order Number: %-20d Order Name: %-5s ", ob.getOrdernumber(),
