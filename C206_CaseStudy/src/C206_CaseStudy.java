@@ -21,9 +21,9 @@ public class C206_CaseStudy {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ArrayList<menu> Foodmenu = Adding_food_into_menu();
-		
-		
-		
+
+
+
 		ArrayList<School> schoolList = new ArrayList<School>();
 		ArrayList<order> orderList = new ArrayList<order>();
 		ArrayList<user> userList = new ArrayList<user>();
@@ -36,8 +36,8 @@ public class C206_CaseStudy {
 		userList.add(new user("Tim", "i2kdb2"));
 		userList.add(new user("Susan", "ssld02"));
 
-		schoolList.add(new School("Changkat changi secondary school", "simei", 67859790));
-		schoolList.add(new School("Ngee Ann secondary school", "Tampines", 67844583));
+		schoolList.add(new School("Example School", "City A", 12345678));
+		schoolList.add(new School("ExampleA School", "City B", 12341234));
 
 		orderList.add(new order(1, "Spaghetti Bolognese"));
 		orderList.add(new order(2, "Fish and Chips"));
@@ -150,14 +150,14 @@ public class C206_CaseStudy {
 
 			option = Helper.readInt("Enter an option > ");
 			if (option == OPTION_ADD) {
-				School school = inputSchool();
-				schoolList.add(school);
+				addSchool(schoolList, null);
 				System.out.println("School added");
 			} else if (option == OPTION_VIEW_ALL) {
 				viewAllSchools(schoolList);
 
 			} else if (option == OPTION_DELETE) {
-				deleteSchool(schoolList, null);
+				String Schoolnametodelete =Helper.readString("Enter the school that is to be deleted > ");
+				deleteSchool(schoolList, Schoolnametodelete);
 			} else if (option == MENU_OPTION_QUIT) {
 			} else {
 				System.out.println("Invalid option");
@@ -279,7 +279,7 @@ public class C206_CaseStudy {
 			if (option == OPTION_ADD) {
 				vendor v = inputvendor();
 				addvendor(vendorList, v);
-				} else if (option == OPTION_VIEW_ALL) {
+			} else if (option == OPTION_VIEW_ALL) {
 				viewAllvendor(vendorList);
 			} else if (option == OPTION_DELETE) {
 				String vendorName = Helper.readString("Enter vendor name to delete > ");
@@ -371,223 +371,240 @@ public class C206_CaseStudy {
 		return new School(name, location, contactNumber);
 	}
 
-	public static boolean deleteSchool(ArrayList<School> schoolList, String schoolName) {
-		for (School school : schoolList) {
-			if (school.getName().equalsIgnoreCase(schoolName)) {
-				schoolList.remove(school);
-				return true;
-			}
-		}
-		return false;
+	public static boolean deleteSchool(ArrayList<School> schoolList, String Schoolnametodelete) {
+	    boolean isDeleted = false;
+	    for (int i = 0; i < schoolList.size(); i++) {
+	        if (schoolList.get(i).getName().equals(Schoolnametodelete)) {
+	            schoolList.remove(i);
+	            System.out.println("School: '" + Schoolnametodelete + "' has been deleted.");
+	            isDeleted = true;
+	            break;
+	        }
+	    }
+	    if (!isDeleted) {
+	        System.out.println("School: '" + Schoolnametodelete + "' was not found.");
+	    }
+	    return isDeleted;
 	}
 
-	public static void viewAllSchools(ArrayList<School> schoolList) {
-		System.out.println("All Schools:");
-		for (School sc : schoolList) {
-			String schooldetails = String.format("Name: %-20s 	Location: %-20s 	Contact Number: %-10d",
-					sc.getName(), sc.getLocation(), sc.getContactNumber());
-			System.out.println(schooldetails);
-		}
+
+public static void viewAllSchools(ArrayList<School> schoolList) {
+	System.out.println("All Schools:");
+	for (School sc : schoolList) {
+		String schooldetails = String.format("Name: %-20s 	Location: %-20s 	Contact Number: %-10d",
+				sc.getName(), sc.getLocation(), sc.getContactNumber());
+		System.out.println(schooldetails);
 	}
+}
 
-	public static String retrieveAllorder(ArrayList<order> orderList) {
-		String output = "";
-		String name = "";
+public static String retrieveAllorder(ArrayList<order> orderList) {
+	String output = "";
+	String name = "";
 
-		for (int i = 0; i < orderList.size(); i++) {
-			name = orderList.get(i).getOrdername();
-			int number = orderList.get(i).getOrdernumber();
-			output += String.format("%-80s %-20d \n", name, number);
-		}
-		return output;
+	for (int i = 0; i < orderList.size(); i++) {
+		name = orderList.get(i).getOrdername();
+		int number = orderList.get(i).getOrdernumber();
+		output += String.format("%-80s %-20d \n", name, number);
 	}
+	return output;
+}
 
-	public static order inputorder() {
-		int number = Helper.readInt("Enter number > ");
-		String name = Helper.readString("Enter name > ");
+public static order inputorder() {
+	int number = Helper.readInt("Enter number > ");
+	String name = Helper.readString("Enter name > ");
 
-		order ob = new order(number, name);
-		return ob;
+	order ob = new order(number, name);
+	return ob;
 
-	}
+}
 
-	public static void addorder(ArrayList<order> orderList, order ob) {
-		order item;
-		for (int i = 0; i < orderList.size(); i++) {
-			item = orderList.get(i);
-			if (item.getOrdername().equalsIgnoreCase(ob.getOrdername()) || ob.getOrdername().isEmpty()) {
-				return;
-			}
-		}
-		orderList.add(ob);
-	}
-
-	private static void retrieveAllpayment(ArrayList<order> orderList) {
-		System.out.println("--- All Order ---");
-		for (order ob : orderList) {
-			String orderDetails = String.format("Order Number: %-20d Order Name: %-5s ", ob.getOrdernumber(),
-					ob.getOrdername());
-			System.out.println(orderDetails);
+public static void addorder(ArrayList<order> orderList, order ob) {
+	order item;
+	for (int i = 0; i < orderList.size(); i++) {
+		item = orderList.get(i);
+		if (item.getOrdername().equalsIgnoreCase(ob.getOrdername()) || ob.getOrdername().isEmpty()) {
+			return;
 		}
 	}
+	orderList.add(ob);
+}
 
-	public static boolean deleteorder(ArrayList<order> orderList, order ob) {
-		int number = Helper.readInt("Enter number > ");
-		String name = Helper.readString("Enter name > ");
+private static void retrieveAllpayment(ArrayList<order> orderList) {
+	System.out.println("--- All Order ---");
+	for (order ob : orderList) {
+		String orderDetails = String.format("Order Number: %-20d Order Name: %-5s ", ob.getOrdernumber(),
+				ob.getOrdername());
+		System.out.println(orderDetails);
+	}
+}
 
-		for (int i = 0; i < orderList.size(); i++) {
-			if (orderList.get(i).getOrdername() == name || orderList.get(i).getOrdernumber() == number) {
+public static boolean deleteorder(ArrayList<order> orderList, order ob) {
+	int number = Helper.readInt("Enter number > ");
+	String name = Helper.readString("Enter name > ");
 
-				orderList.remove(i);
-				return true;
-			}
+	for (int i = 0; i < orderList.size(); i++) {
+		if (orderList.get(i).getOrdername() == name || orderList.get(i).getOrdernumber() == number) {
+
+			orderList.remove(i);
+			return true;
 		}
-		return false;
-
 	}
+	return false;
 
-	public static String retrieveAllUser(ArrayList<user> userList) {
-		String output = "";
+}
 
-		for (int i = 0; i < userList.size(); i++) {
+public static String retrieveAllUser(ArrayList<user> userList) {
+	String output = "";
 
-			output += String.format("%-15s %-10s\n", userList.get(i).getUserame(), userList.get(i).getPassword());
-		}
-		return output;
+	for (int i = 0; i < userList.size(); i++) {
+
+		output += String.format("%-15s %-10s\n", userList.get(i).getUserame(), userList.get(i).getPassword());
 	}
+	return output;
+}
 
-	public static void viewAllUser(ArrayList<user> userList) {
-		C206_CaseStudy.setHeader("USER LIST");
-		String output = String.format("%-15s %-15s\n ", "USERNAME", "PASSWORD");
-		output += retrieveAllUser(userList);
-		System.out.println(output);
+public static void viewAllUser(ArrayList<user> userList) {
+	C206_CaseStudy.setHeader("USER LIST");
+	String output = String.format("%-15s %-15s\n ", "USERNAME", "PASSWORD");
+	output += retrieveAllUser(userList);
+	System.out.println(output);
+}
+
+private static void setHeader(String header) {
+	// TODO Auto-generated method stub
+	Helper.line(80, "-");
+	System.out.println(header);
+	Helper.line(80, "-");
+}
+
+public static user inputuser() {
+	String username = Helper.readString("Enter username > ");
+	String password = Helper.readString("Enter  password > ");
+
+	user u = new user(username, password);
+	return u;
+
+}
+
+public static void addUser(ArrayList<user> userList, user u) {
+	user item;
+	for (int i = 0; i < userList.size(); i++) {
+		item = userList.get(i);
+		if (item.getUserame().equalsIgnoreCase(u.getPassword()))
+			return;
 	}
-
-	private static void setHeader(String header) {
-		// TODO Auto-generated method stub
-		Helper.line(80, "-");
-		System.out.println(header);
-		Helper.line(80, "-");
+	if ((u.getUserame().isEmpty()) || (u.getPassword().isEmpty())) {
+		return;
 	}
+	userList.add(u);
+}
 
-	public static user inputuser() {
-		String username = Helper.readString("Enter username > ");
-		String password = Helper.readString("Enter  password > ");
+public static void removeUser(ArrayList<user> userList, user u) {
+	user item;
+	for (int i = 0; i < userList.size(); i++) {
+		item = userList.get(i);
+		if (item.getUserame().equalsIgnoreCase(u.getPassword())) {
 
-		user u = new user(username, password);
-		return u;
-
-	}
-
-	public static void addUser(ArrayList<user> userList, user u) {
-		user item;
-		for (int i = 0; i < userList.size(); i++) {
-			item = userList.get(i);
-			if (item.getUserame().equalsIgnoreCase(u.getPassword()))
-				return;
+			return;
 		}
 		if ((u.getUserame().isEmpty()) || (u.getPassword().isEmpty())) {
 			return;
 		}
-		userList.add(u);
+		userList.remove(i);
 	}
 
-	public static void removeUser(ArrayList<user> userList, user u) {
-		user item;
-		for (int i = 0; i < userList.size(); i++) {
-			item = userList.get(i);
-			if (item.getUserame().equalsIgnoreCase(u.getPassword())) {
+}
 
-				return;
-			}
-			if ((u.getUserame().isEmpty()) || (u.getPassword().isEmpty())) {
-				return;
-			}
-			userList.remove(i);
-		}
+public static payment inputPayment() {
+	int paymentId = Helper.readInt("Enter ID > ");
+	double amount = Helper.readDouble("Enter amount of money > ");
 
-	}
+	return new payment(paymentId, amount);
+}
 
-	public static payment inputPayment() {
-		int paymentId = Helper.readInt("Enter ID > ");
-		double amount = Helper.readDouble("Enter amount of money > ");
-
-		return new payment(paymentId, amount);
-	}
-
-	public static void addPayment(ArrayList<payment> paymentList, payment pc) {
-		for (payment item : paymentList) {
-			if (item.getpaymentid() == pc.getpaymentid()) {
-				return;
-			}
-		}
-		paymentList.add(pc);
-	}
-
-	private static void viewAllpayment(ArrayList<payment> paymentList) {
-		System.out.println("--- All Payments ---");
-		for (payment pc : paymentList) {
-			String paymentDetails = String.format("Payment ID: %-10d Amount: %.2f", pc.getpaymentid(), pc.getamount());
-			System.out.println(paymentDetails);
+public static void addPayment(ArrayList<payment> paymentList, payment pc) {
+	for (payment item : paymentList) {
+		if (item.getpaymentid() == pc.getpaymentid()) {
+			return;
 		}
 	}
+	paymentList.add(pc);
+}
 
-	public static boolean deletepayment(ArrayList<payment> paymentList, int paymentIdToDelete) {
-		boolean isDeleted = false;
-		for (int i = 0; i < paymentList.size(); i++) {
-			if (paymentList.get(i).getpaymentid() == paymentIdToDelete) {
-				paymentList.remove(i);
-				System.out.println("Payment with ID '" + paymentIdToDelete + "' has been deleted.");
-				isDeleted = true;
-				break;
-			}
-		}
-		if (!isDeleted) {
-			System.out.println("Payment with ID '" + paymentIdToDelete + "' was not found.");
-		}
-		return isDeleted;
+private static void viewAllpayment(ArrayList<payment> paymentList) {
+	System.out.println("--- All Payments ---");
+	for (payment pc : paymentList) {
+		String paymentDetails = String.format("Payment ID: %-10d Amount: %.2f", pc.getpaymentid(), pc.getamount());
+		System.out.println(paymentDetails);
 	}
+}
 
-	 public static vendor inputvendor() {
-	        String name = Helper.readString("Enter vendor name: ");
-	        String location = Helper.readString("Enter vendor location: ");
-	        String contractEnd = Helper.readString("Enter contract end date: ");
-	        return new vendor(name, location, contractEnd);
-	    }
+public static boolean deletepayment(ArrayList<payment> paymentList, int paymentIdToDelete) {
+	boolean isDeleted = false;
+	for (int i = 0; i < paymentList.size(); i++) {
+		if (paymentList.get(i).getpaymentid() == paymentIdToDelete) {
+			paymentList.remove(i);
+			System.out.println("Payment with ID '" + paymentIdToDelete + "' has been deleted.");
+			isDeleted = true;
+			break;
+		}
+	}
+	if (!isDeleted) {
+		System.out.println("Payment with ID '" + paymentIdToDelete + "' was not found.");
+	}
+	return isDeleted;
+}
 
-	    public static void addvendor(ArrayList<vendor> vendorList,vendor v) {
-	    	vendor item;
-			for (int i = 0; i < vendorList.size(); i++) {
-				item = vendorList.get(i);
-				if (item.getName().equalsIgnoreCase(v.getName()))
-					return;
-			}
-			if ((v.getName().isEmpty()) || (v.getLocation().isEmpty()||v.getContractEnd().isEmpty())) {
-				return;
-			}
-			vendorList.add(v);
+public static vendor inputvendor() {
+	String name = Helper.readString("Enter vendor name: ");
+	String location = Helper.readString("Enter vendor location: ");
+	String contractEnd = Helper.readString("Enter contract end date: ");
+	return new vendor(name, location, contractEnd);
+}
 
-		
+public static void addvendor(ArrayList<vendor> vendorList,vendor v) {
+	vendor item;
+	for (int i = 0; i < vendorList.size(); i++) {
+		item = vendorList.get(i);
+		if (item.getName().equalsIgnoreCase(v.getName()))
+			return;
+	}
+	if ((v.getName().isEmpty()) || (v.getLocation().isEmpty()||v.getContractEnd().isEmpty())) {
+		return;
+	}
+	vendorList.add(v);
 
-	    }
 
-	    public static void viewAllvendor(ArrayList<vendor> vendorList) {
-	        System.out.println("All Vendors:");
-	        for (vendor vendor : vendorList) {
-	            String vendorDetails = String.format("Name: %-20s   Location: %-25s Contract End: %s", vendor.getName(),
-	                    vendor.getLocation(), vendor.getContractEnd());
-	            System.out.println(vendorDetails);
-	        }
-	    }
-	    public static boolean deletevendor(ArrayList<vendor> vendorList, String vendorName) {
-	        for (int i = 0; i < vendorList.size(); i++) {
-	            vendor vendor = vendorList.get(i);
-	            if (vendor.getName().equalsIgnoreCase(vendorName)) {
-	                vendorList.remove(i);
-	                return true;
-	            }
-	        }
-	        return false;
-	    }
+
+}
+
+public static void viewAllvendor(ArrayList<vendor> vendorList) {
+	System.out.println("All Vendors:");
+	for (vendor vendor : vendorList) {
+		String vendorDetails = String.format("Name: %-20s   Location: %-25s Contract End: %s", vendor.getName(),
+				vendor.getLocation(), vendor.getContractEnd());
+		System.out.println(vendorDetails);
+	}
+}
+public static boolean deletevendor(ArrayList<vendor> vendorList, String vendorName) {
+	for (int i = 0; i < vendorList.size(); i++) {
+		vendor vendor = vendorList.get(i);
+		if (vendor.getName().equalsIgnoreCase(vendorName)) {
+			vendorList.remove(i);
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * @param schoolList
+ * @param sch1
+ */
+public static void addSchool(ArrayList<School> schoolList, School sch1) {
+	// TODO Auto-generated method stub
+	School school = inputSchool();
+	schoolList.add(school);
+}
 
 }

@@ -18,6 +18,11 @@ public class C206_CaseStudyTest {
 	private user u3;
 	private order ob1;
 	private order ob2;
+	private School sch1;
+	private School sch2;
+	private School sch3;
+	private School sch4;
+	private School sch5;
 
 
 
@@ -26,7 +31,7 @@ public class C206_CaseStudyTest {
 	private ArrayList<vendor>vendorList;
 	private ArrayList<user>UserManagement;
 	private ArrayList<order>orderList;
-
+    private ArrayList<School> schoolList;
 
 	@Before
 	public void setUp() throws Exception {
@@ -43,6 +48,9 @@ public class C206_CaseStudyTest {
 		UserManagement = new ArrayList<user>();
 		ob1 = new order(1,"Pasta");
 		ob2 = new order(2, "Burger");
+		sch1=(new School("Example School", "City A", 12345678));
+		sch2=(new School("ExampleA School", "City B", 12341234));
+		schoolList=new ArrayList<School>();
 	}
 
 	@After
@@ -360,7 +368,54 @@ public class C206_CaseStudyTest {
 //		assertFalse("Test the the delete fails.", isReturned);  
 //	}
 
+    @Test
+    public void testAddSchool() {
+		vendorList.clear();
+        // Check that the size of the schoolList is initially 4
+        assertEquals(0, schoolList.size()); 		
+        sch1=(new School("Example School", "City A", 12345678));
+        C206_CaseStudy.addSchool(schoolList, sch1);
 
+		sch2=(new School("ExampleA School", "City B", 12341234));
+		C206_CaseStudy.addSchool(schoolList, sch2);
+        
+        
+         // Item list is not null and it is not empty
+       assertNotNull("Test if there is valid School arraylist to add to", schoolList);
+       assertEquals("Test that the School arraylist is empty.",2, schoolList.size());
+       
+        // Add a new school
+       sch3=(new School("New School", "City E", 98765432));
+		C206_CaseStudy.addSchool(schoolList, sch3);
+
+        // Check that the size of the schoolList is now 3
+        assertEquals("Test that the School arraylist size is 4 after adding a school.", 3, schoolList.size());
+        
+        // Add a school with a valid contact number
+        sch4=(new School("Valid Contact School", "City F", 87654321));
+		C206_CaseStudy.addSchool(schoolList, sch4);
+        
+        // Check that the size of the schoolList is now 4
+        assertEquals("Test that the School arraylist size is 6 after adding a school.", 4, schoolList.size());
+        
+        // Check that the size of the schoolList remains unchanged (still 4)
+        assertEquals("Test that the School arraylist size remains unchanged.", 4, schoolList.size());
+       
+    }
+
+	@Test
+	public void testDeleteSchool() {
+		schoolList.clear();
+//      sch5=(new School("republic", "Singapore", 98765432));
+//		C206_CaseStudy.addSchool(schoolList, sch5);
+		schoolList.add(sch1);
+		schoolList.add(sch2);
+		
+	    boolean isDeleteSuccessful = C206_CaseStudy.deleteSchool(schoolList, "Example School");
+	    System.out.println(isDeleteSuccessful);
+		assertTrue("Test if an existing item can be deleted", isDeleteSuccessful);
+	    assertEquals(1, schoolList.size()); // Change the expected size to 2
+	}
 	
 
 
