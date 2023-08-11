@@ -40,6 +40,9 @@ public class menu {
 	public void setSpecification(String specification) {
 		this.specification = specification;
 	}
+//	public void String() {
+//		
+//	}
 	
 	
 		
