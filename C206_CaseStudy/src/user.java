@@ -10,7 +10,7 @@ public class user {
  public String getUserame() {
   return userame;
  }
-
+//something here
  public String getPassword() {
   return password;
  }
