@@ -304,68 +304,66 @@ public class C206_CaseStudyTest {
 		}
 	}
 	   //Test for order is wrong
-//@Test
-//	public void testAddOrder() {
-//
-//		assertNotNull("Test if there is valid order from ", orderList);
-//		//Given an empty list, after adding 1 order, the size of the list is 1 - normal
-//		//The item just added is as same as the first order the list
-//		C206_CaseStudy.addorder(orderList, ob1);    
-//		assertEquals("Test that order arraylist size is 1", 1, orderList.size());
-//		assertSame("Test that Order is added", ob1, orderList.get(0));
-//
-//		//Add another item. test The size of the list is 2 order? - normal
-//		//The item just added is as same as the second item of the list
-//		C206_CaseStudy.addorder(orderList, ob2);
-//		assertEquals("Test that order arraylist size is 2", 2, orderList.size());
-//		assertSame("Test that order is added", 2, orderList.get(1));
-//	}
+@Test
+	public void testAddOrder() {
+
+		assertNotNull("Test if there is valid order from ", orderList);
+		//Given an empty list, after adding 1 order, the size of the list is 1 - normal
+		//The item just added is as same as the first order the list
+		C206_CaseStudy.addorder(orderList, ob1);    
+		assertEquals("Test that order arraylist size is 1", 1, orderList.size());
+		assertSame("Test that Order is added", ob1, orderList.get(0));
+
+		//Add another item. test The size of the list is 2 order? - normal
+		//The item just added is as same as the second item of the list
+		C206_CaseStudy.addorder(orderList, ob2);
+		assertEquals("Test that order arraylist size is 2", 2, orderList.size());
+		assertSame("Test that order is added", 2, orderList.get(1));
+	}
 
 
 
 	   //Test for order is wrong
 
-//	@Test
-//	public void testRetrieveAllorder() {
-//		// Test if order list is not null but empty -boundary
-//		assertNotNull("Test if there is valid order arraylist to retrieve order", orderList);
-//
-//		//test if the list of order retrieved from the C206_CaseStudyTes is empty - boundary
-//		String allorder= C206_CaseStudy.retrieveAllorder(orderList);
-//		String testOutput = "";
-//		assertEquals("Check that ViewAllorderlist", testOutput, allorder);
-//
-//		//Given an empty list, after adding 2 transaction, test if the size of the list is 2 - normal
-//		C206_CaseStudy.addorder(orderList, ob1);
-//		C206_CaseStudy.addorder(orderList,ob2);
-//		assertEquals("Test that order arraylist size is 2", 2, orderList.size());
-//
-//		//test if the expected output string same as the list of order retrieved from the C206_CaseStudyTest  
-//		allorder= C206_CaseStudy.retrieveAllorder(orderList);
-//		testOutput = String.format("%-10d %-10s\n",ob1.getOrdernumber(), ob1.getOrdername());
-//		testOutput += String.format("%-10d %-10s\n",ob2.getOrdernumber(), ob2.getOrdername());
-//		assertEquals("Test that ViewAllorderlist", testOutput, allorder);
-//
-//	}
+	@Test
+	public void testRetrieveAllorder() {
+		// Test if order list is not null but empty -boundary
+	assertNotNull("Test if there is valid order arraylist to retrieve order", orderList);
+		//test if the list of order retrieved from the C206_CaseStudyTes is empty - boundary
+		String allorder= C206_CaseStudy.retrieveAllorder(orderList);
+		String testOutput = "";
+		assertEquals("Check that ViewAllorderlist", testOutput, allorder);
+
+		//Given an empty list, after adding 2 transaction, test if the size of the list is 2 - normal
+		C206_CaseStudy.addorder(orderList, ob1);
+		C206_CaseStudy.addorder(orderList,ob2);
+		assertEquals("Test that order arraylist size is 2", 2, orderList.size());
+
+		//test if the expected output string same as the list of order retrieved from the C206_CaseStudyTest  
+		allorder= C206_CaseStudy.retrieveAllorder(orderList);
+		testOutput = String.format("%-10d %-10s\n",ob1.getOrdernumber(), ob1.getOrdername());
+		testOutput += String.format("%-10d %-10s\n",ob2.getOrdernumber(), ob2.getOrdername());
+		assertEquals("Test that ViewAllorderlist", testOutput, allorder);
+
+	}
    //Test for order is wrong
-//	@Test
-//	public void testDeleteorder() {
-//
-//		// Test case 1: Return a loaned out item
-//		assertNotNull("Test if there is valid order delete from", orderList);
-//		C206_CaseStudy.addorder(orderList, ob1);
-//		Boolean ok = C206_CaseStudy.deleteorder(orderList, ob2);
-//		assertTrue("Test if order is successfully deleted out.", ok);
-//		Boolean isReturned = C206_CaseStudy.deleteorder(orderList, ob1);
-//		assertTrue("Test if the delete is successful.", isReturned);
-//		assertEquals("Test that order is now available.",orderList.get(0).getOrdername());
-//		// Test case 2: Return an item that is not loaned out
-//		isReturned = C206_CaseStudy.deleteorder(orderList, ob1);
-//		assertFalse("Test that the delete fails.", isReturned);
-//
-//		// Test case 3: Return an item that does not exist 
-//		isReturned = C206_CaseStudy.deleteorder(orderList, ob1);
-//		assertFalse("Test the the delete fails.", isReturned);  
+	@Test
+	public void testDeleteorder() {
+
+		// Test case 1: Return a loaned out item
+		assertNotNull("Test if there is valid order delete from", orderList);
+		C206_CaseStudy.addorder(orderList, ob1);
+		Boolean ok = C206_CaseStudy.deleteorder(orderList, ob2);
+		assertTrue("Test if order is successfully deleted out.", ok);
+		Boolean isReturned = C206_CaseStudy.deleteorder(orderList, ob1);
+		assertTrue("Test if the delete is successful.", isReturned);
+		assertEquals("Test that order is now available.",orderList.get(0).getOrdername());
+		// Test case 2: Return an item that is not loaned out
+		isReturned = C206_CaseStudy.deleteorder(orderList, ob1);
+		assertFalse("Test that the delete fails.", isReturned);
+
+		// Test case 3: Return an item that does not exist //		isReturned = C206_CaseStudy.deleteorder(orderList, ob1);
+		assertFalse("Test the the delete fails.", isReturned);  
 //	}
 
     @Test
